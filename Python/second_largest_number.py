@@ -1,4 +1,3 @@
-import sys
 
 def Solution():
     size = int(input())
