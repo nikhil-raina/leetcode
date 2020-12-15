@@ -151,6 +151,28 @@ public class Tree {
         return leftHeight >= rightHeight ? leftHeight + 1 : rightHeight + 1;
     }
 
+    public boolean isBalanced() {
+        return helperBalanced(this.root) != -1;
+    }
+
+    public int helperBalanced(Node root) {
+        if (root == null) {
+            return 0;
+        }
+        int leftHeight = helperBalanced(root.getLeftNode());
+        int rightHeight = helperBalanced(root.getRightNode());
+
+        if (leftHeight == -1 || rightHeight == -1) {
+            return -1;
+        }
+
+        if (Math.abs(leftHeight - rightHeight) > 1) {
+            return -1;
+        }
+
+        return leftHeight >= rightHeight ? leftHeight + 1 : rightHeight + 1;
+    }
+
     public static void main(String[] args) {
         Tree tree = new Tree();
         Node node1 = new Node(1);
@@ -181,5 +203,6 @@ public class Tree {
         tree.preOrder();
         tree.bfs();
         tree.height();
+        System.out.println(tree.isBalanced());
     }
 }
