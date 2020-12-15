@@ -10,16 +10,12 @@ public class Tree {
 
     private Node insertNode(Node currentNode, Node node) {
         if (currentNode == null) {
-            System.out.println("Added");
             currentNode = node;
         } else if (currentNode.equals(node)) {
-            System.out.println("Its equal");
             return null;
         } else if (currentNode.getData() < node.getData()) {
-            System.out.println("In node " + currentNode.getData());
             currentNode.setRightNode(insertNode(currentNode.getRightNode(), node));
         } else {
-            System.out.println("In node " + currentNode.getData());
             currentNode.setLeftNode(insertNode(currentNode.getLeftNode(), node));
         }
         return currentNode;
