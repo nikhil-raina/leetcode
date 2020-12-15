@@ -69,6 +69,48 @@ public class Tree {
         return isNodePresent(this.root, node);
     }
 
+    public void inorder() {
+        System.out.print("In-Order Traversal :> ");
+        inorder_traversal(this.root);
+        System.out.println();
+    }
+
+    public void inorder_traversal(Node node) {
+        if (node != null) {
+            inorder_traversal(node.getLeftNode());
+            System.out.print(node.getData() + " -> ");
+            inorder_traversal(node.getRightNode());
+        }
+    }
+
+    public void postOrder() {
+        System.out.print("Post-Order Traversal :> ");
+        postOrder_traversal(this.root);
+        System.out.println();
+    }
+
+    public void postOrder_traversal(Node node) {
+        if (node != null) {
+            postOrder_traversal(node.getLeftNode());
+            postOrder_traversal(node.getRightNode());
+            System.out.print(node.getData() + " -> ");
+        }
+    }
+
+    public void preOrder() {
+        System.out.print("Pre-Order Traversal :> ");
+        preOrder_traversal(this.root);
+        System.out.println();
+    }
+
+    public void preOrder_traversal(Node node) {
+        if (node != null) {
+            System.out.print(node.getData() + " -> ");
+            preOrder_traversal(node.getLeftNode());
+            preOrder_traversal(node.getRightNode());
+        }
+    }
+
     public static void main(String[] args) {
         Tree tree = new Tree();
         Node node1 = new Node(1);
@@ -93,6 +135,9 @@ public class Tree {
         tree.insertNode(node3);
         tree.insertNode(new Node(-7));
         tree.deleteNode(node78);
-        tree.isNodePresent(node5);
+        System.out.println(tree.isNodePresent(node5));
+        tree.inorder();
+        tree.postOrder();
+        tree.preOrder();
     }
 }
