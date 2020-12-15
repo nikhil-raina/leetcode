@@ -12,7 +12,7 @@ public class Tree {
         if (currentNode == null) {
             currentNode = node;
         } else if (currentNode.equals(node)) {
-            return null;
+            return currentNode;
         } else if (currentNode.getData() < node.getData()) {
             currentNode.setRightNode(insertNode(currentNode.getRightNode(), node));
         } else {
@@ -23,6 +23,34 @@ public class Tree {
 
     public void insertNode(Node node) {
         this.root = insertNode(this.root, node);
+    }
+
+    public void deleteNode(Node node) {
+        this.root = deleteNode(this.root, node);
+    }
+
+    public Node deleteNode(Node currentNode, Node node) {
+        try {
+            if (currentNode.getData() == node.getData()) {
+                if (currentNode.getLeftNode() == null && currentNode.getRightNode() == null) {
+                    return null;
+                }
+                if (currentNode.getRightNode() == null) {
+                    return currentNode.getLeftNode();
+                }
+                if (currentNode.getLeftNode() == null) {
+                    return currentNode.getRightNode();
+                }
+            } else if (currentNode.getData() < node.getData()) {
+                currentNode.setRightNode(deleteNode(currentNode.getRightNode(), node));
+            }
+            currentNode.setLeftNode(deleteNode(currentNode.getLeftNode(), node));
+
+        } catch (NullPointerException e) {
+            System.out.println("Current Node is null");
+        }
+
+        return currentNode;
     }
 
 
@@ -42,5 +70,14 @@ public class Tree {
         tree.insertNode(node78);
         tree.insertNode(node4);
         tree.insertNode(nodeDuplicate);
+        tree.insertNode(node7);
+        tree.insertNode(new Node(-9));
+        tree.insertNode(new Node(-6));
+        tree.insertNode(new Node(-2));
+        tree.insertNode(new Node(-11));
+        tree.insertNode(node3);
+        tree.insertNode(new Node(-7));
+        tree.deleteNode(node78);
+        System.out.println("Hello");
     }
 }
