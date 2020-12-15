@@ -1,5 +1,8 @@
 package CustomTree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Tree {
 
     private Node root;
@@ -111,6 +114,30 @@ public class Tree {
         }
     }
 
+    public void bfs() {
+        System.out.print("BFS Traversal :> ");
+        bfs(this.root);
+        System.out.println();
+    }
+
+    public void bfs(Node node) {
+        Queue<Node> nodeQueue = new LinkedList<>();
+        nodeQueue.add(node);
+
+        while (!nodeQueue.isEmpty()) {
+            Node newNode = nodeQueue.remove();
+            System.out.print(newNode.getData() + " -> ");
+
+            if (newNode.getLeftNode() != null) {
+                nodeQueue.add(newNode.getLeftNode());
+            }
+            if (newNode.getRightNode() != null) {
+                nodeQueue.add(newNode.getRightNode());
+            }
+        }
+
+    }
+
     public static void main(String[] args) {
         Tree tree = new Tree();
         Node node1 = new Node(1);
@@ -139,5 +166,6 @@ public class Tree {
         tree.inorder();
         tree.postOrder();
         tree.preOrder();
+        tree.bfs();
     }
 }
