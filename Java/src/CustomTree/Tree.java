@@ -31,7 +31,7 @@ public class Tree {
 
     public Node deleteNode(Node currentNode, Node node) {
         try {
-            if (currentNode.getData() == node.getData()) {
+            if (currentNode.equals(node)) {
                 if (currentNode.getLeftNode() == null && currentNode.getRightNode() == null) {
                     return null;
                 }
@@ -46,13 +46,28 @@ public class Tree {
             }
             currentNode.setLeftNode(deleteNode(currentNode.getLeftNode(), node));
 
-        } catch (NullPointerException e) {
-            System.out.println("Current Node is null");
-        }
+        } catch (NullPointerException e) { }
 
         return currentNode;
     }
 
+    public boolean isNodePresent(Node root, Node target) {
+        try {
+            if (root.equals(target)) {
+                return true;
+            } else if (root.getData() < target.getData()) {
+                return isNodePresent(root.getRightNode(), target);
+            } else {
+                return isNodePresent(root.getLeftNode(), target);
+            }
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    public boolean isNodePresent(Node node) {
+        return isNodePresent(this.root, node);
+    }
 
     public static void main(String[] args) {
         Tree tree = new Tree();
@@ -78,6 +93,6 @@ public class Tree {
         tree.insertNode(node3);
         tree.insertNode(new Node(-7));
         tree.deleteNode(node78);
-        System.out.println("Hello");
+        tree.isNodePresent(node5);
     }
 }
