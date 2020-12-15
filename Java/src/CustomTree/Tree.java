@@ -135,7 +135,20 @@ public class Tree {
                 nodeQueue.add(newNode.getRightNode());
             }
         }
+    }
 
+    public void height() {
+        System.out.println("The height of the tree is :> " + height(this.root));
+    }
+
+    public int height(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftHeight = height(node.getLeftNode());
+        int rightHeight = height(node.getRightNode());
+
+        return leftHeight >= rightHeight ? leftHeight + 1 : rightHeight + 1;
     }
 
     public static void main(String[] args) {
@@ -167,5 +180,6 @@ public class Tree {
         tree.postOrder();
         tree.preOrder();
         tree.bfs();
+        tree.height();
     }
 }
