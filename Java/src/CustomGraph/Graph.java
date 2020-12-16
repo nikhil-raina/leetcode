@@ -80,6 +80,7 @@ public class Graph {
         System.out.println();
     }
 
+    // need to find out the big o notation for this.
     public void remove(Node node) {
         List<Node> neighbors = this.getEdges(node);
         int initialNeighborSize = neighbors.size();
