@@ -151,5 +151,7 @@ public class Map <K, V> {
         System.out.println(map.toString());
         System.out.println(map.get(null));
         System.out.println(map.get(8838));
+        map.update(5, "updated asd");
+        System.out.println(map.toString());
     }
 }
