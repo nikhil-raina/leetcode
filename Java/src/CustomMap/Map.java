@@ -12,14 +12,23 @@ public class Map <K, V> {
     public Map () {
         this.map = new ArrayList<>();
         this.capacity = startSize;
+        this.createNullSpace(getCapacity());
         this.size = 0;
     }
 
     public Map (int capacity) {
         this.map = new ArrayList<>();
         this.capacity = capacity;
+        this.createNullSpace(getCapacity());
         this.size = 0;
 
+    }
+
+    public void createNullSpace(int capacity) {
+        // adds nulls to the entire space provided so far in order to give the "space" concept
+        for(int nullSpacePointer = 0; nullSpacePointer < capacity; nullSpacePointer++) {
+            this.map.add(null);
+        }
     }
 
     public int getCapacity() {
@@ -27,7 +36,9 @@ public class Map <K, V> {
     }
 
     public int index (K key) {
-        return key.hashCode() % getCapacity();
+        if(key != null)
+            return key.hashCode() % getCapacity();
+        return 0;
     }
 
     public int getSize() {
@@ -39,7 +50,7 @@ public class Map <K, V> {
             autoIncrease();
             for (int startIndex = index(key); startIndex < getCapacity(); startIndex++) {
                 if (this.map.get(startIndex) == null) {
-                    this.map.add(startIndex, new EntryNode<>(key, value));
+                    this.map.set(startIndex, new EntryNode<>(key, value));
                     break;
                 }
             }
@@ -76,29 +87,40 @@ public class Map <K, V> {
 
     @Override
     public String toString() {
-        return "Map{" +
-                "map=" + map +
-                ", size=" + size +
-                ", capacity=" + capacity +
-                '}';
+        String result = "\n";
+        for (EntryNode<K, V> node : this.map) {
+            if(node != null)
+                result = result + "\tKey => " + node.getKey() + "\tValue => " + node.getValue() + "\n";
+        }
+        return "Map {\n" +
+                "  map={" + result +
+                " }\n  size=" + size +
+                "\n  capacity=" + capacity +
+                "\n}";
     }
 
-//    Need to work this part out
     public void autoIncrease() {
-//        if (getCapacity() - size <= 5) {
-//            this.capacity = getCapacity() * 2;
-//            ArrayList<EntryNode<K, V>> tempMap = this.map;
-//
-//            for(EntryNode<K, V> node : this.getContents()) {
-//                tempMap.(node);
-//            }
-//        }
+        if (getCapacity() - size <= 5) {
+            this.capacity = getCapacity() * 2;
+            ArrayList<EntryNode<K, V>> tempMap = this.map;
+            int tempSize = getSize();
+            this.size = 0;
+            this.map = new ArrayList<>();
+            this.createNullSpace(getCapacity());
+
+            // Copies all the nodes into the new map.
+            for(EntryNode<K, V> node : tempMap) {
+                if(node != null)
+                    put(node);
+            }
+            assert tempSize == getSize();
+        }
     }
 
-    public EntryNode<K, V> get(K key) {
+    public V get(K key) {
         int bucketIndex = index(key);
         if (this.map.get(bucketIndex) != null) {
-            return this.map.get(bucketIndex);
+            return this.map.get(bucketIndex).getValue();
         }
         System.out.println("Cant get value from null space");
         return null;
@@ -108,6 +130,7 @@ public class Map <K, V> {
         int bucketIndex = index(key);
         if (this.map.get(bucketIndex) != null) {
             this.map.remove(bucketIndex);
+            this.size--;
         }
         System.out.println("Cant remove node from null space");
     }
@@ -124,5 +147,9 @@ public class Map <K, V> {
         map.put(111,"fghjkl");
         map.put(8838,"7272");
         System.out.println(map.toString());
+        map.remove(111);
+        System.out.println(map.toString());
+        System.out.println(map.get(null));
+        System.out.println(map.get(8838));
     }
 }
