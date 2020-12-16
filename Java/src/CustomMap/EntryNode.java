@@ -4,26 +4,15 @@ public class EntryNode <K, V> {
     private K key;
     private V value;
 
-    private EntryNode<K, V> nextNode;
 
     public EntryNode(K key, V value) {
         this.key = key;
         this.value = value;
-        this.nextNode = null;
     }
 
     public EntryNode(K key, V value, EntryNode<K, V> nextNode) {
         this.key = key;
         this.value = value;
-        this.nextNode = nextNode;
-    }
-
-    public EntryNode<K, V> getNextNode() {
-        return nextNode;
-    }
-
-    public void setNextNode(EntryNode<K, V> nextNode) {
-        this.nextNode = nextNode;
     }
 
     public K getKey() {
@@ -36,6 +25,15 @@ public class EntryNode <K, V> {
 
     public void setKey(K key) {
         this.key = key;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof EntryNode) {
+            EntryNode<K, V> node = (EntryNode<K, V>) o;
+            return this.key.equals(node.getKey()) && this.value.equals(node.getValue());
+        }
+        return false;
     }
 
     public void setValue(V value) {
