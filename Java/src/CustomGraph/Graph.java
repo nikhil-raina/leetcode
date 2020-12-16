@@ -1,9 +1,6 @@
 package CustomGraph;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Graph {
 
@@ -41,8 +38,27 @@ public class Graph {
         return this.map.get(start).contains(end);
     }
 
-    public List getEdges(Node node) {
+    public List<Node> getEdges(Node node) {
         return this.map.get(node);
+    }
+
+    public void bfs(Node root) {
+        Queue<Node> queue = new LinkedList<>();
+        Set<Node> visited = new HashSet<>();
+        queue.add(root);
+        visited.add(root);
+        System.out.print("BFS :> ");
+        while (!queue.isEmpty()) {
+            Node currentNode = queue.remove();
+            System.out.print(currentNode.getData() + " -> ");
+            for (Node neighbor : this.getEdges(currentNode)) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    queue.add(neighbor);
+                }
+            }
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
@@ -60,6 +76,7 @@ public class Graph {
         graph.insert(node4, node5);
         graph.insert(node6, node7);
         graph.insert(node7, node1);
-        System.out.println("Hello");
+        graph.bfs(node1);
+
     }
 }
