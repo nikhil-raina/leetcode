@@ -61,6 +61,25 @@ public class Graph {
         System.out.println();
     }
 
+    public void dfs(Node root) {
+        Stack<Node> stack = new Stack<>();
+        Set<Node> visited = new HashSet<>();
+        stack.add(root);
+        visited.add(root);
+        System.out.print("DFS :> ");
+        while (!stack.isEmpty()) {
+            Node currentNode = stack.pop();
+            System.out.print(currentNode.getData() + " -> ");
+            for (Node neighbor : this.getEdges(currentNode)) {
+                if (!visited.contains(neighbor)) {
+                    visited.add(neighbor);
+                    stack.add(neighbor);
+                }
+            }
+        }
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         Graph graph = new Graph();
         Node node1 = new Node(12);
@@ -77,6 +96,7 @@ public class Graph {
         graph.insert(node6, node7);
         graph.insert(node7, node1);
         graph.bfs(node1);
+        graph.dfs(node1);
 
     }
 }
