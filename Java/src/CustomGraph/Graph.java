@@ -86,8 +86,8 @@ public class Graph {
         for (int neighborCounter = 0; neighborCounter < initialNeighborSize; neighborCounter++) {
             Node neighborNode = neighbors.remove(0);
             this.removeEdge(neighborNode, node);
-            for (int newConnection = 0; newConnection < neighbors.size(); newConnection++) {
-                this.addEdge(neighborNode, neighbors.get(newConnection));
+            for (Node neighbor : neighbors) {
+                this.addEdge(neighborNode, neighbor);
             }
         }
         this.map.remove(node);
